@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jobhub/constants/app_constants.dart';
 import 'package:jobhub/controllers/exports.dart';
 import 'package:jobhub/views/common/exports.dart';
-import 'package:jobhub/views/common/reusable_text.dart';
 import 'package:jobhub/views/ui/onboarding/widgets/page_one.dart';
 import 'package:jobhub/views/ui/onboarding/widgets/page_three.dart';
 import 'package:jobhub/views/ui/onboarding/widgets/page_two.dart';
@@ -39,7 +37,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             onPageChanged: (page) {
               onBoardNotifier.isLastPage = page == 2;
             },
-            children: const [PageOne(), PageTwo(), PageThree()],
+            children: const [
+              PageOne(),
+              PageTwo(),
+              PageThree(),
+            ],
           ),
           Positioned(
             bottom: heiGht * 0.12,
@@ -83,7 +85,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                           GestureDetector(
                             onTap: () {
                               pageController.nextPage(
-                                  duration: Duration(microseconds: 300),
+                                  duration: const Duration(microseconds: 300),
                                   curve: Curves.ease);
                             },
                             child: ReusableText(

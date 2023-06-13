@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_connect/http/src/utils/utils.dart';
-import 'package:jobhub/constants/app_constants.dart';
 import 'package:jobhub/views/common/exports.dart';
 
 class CustomTextField extends StatelessWidget {

@@ -2,15 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:jobhub/constants/app_constants.dart';
 import 'package:jobhub/controllers/login_provider.dart';
 import 'package:jobhub/views/common/app_bar.dart';
 import 'package:jobhub/views/common/custom_btn.dart';
 import 'package:jobhub/views/common/custom_textfield.dart';
 import 'package:jobhub/views/common/exports.dart';
 import 'package:jobhub/views/common/height_spacer.dart';
-import 'package:jobhub/views/common/reusable_text.dart';
 import 'package:jobhub/views/ui/auth/signup.dart';
+import 'package:jobhub/views/ui/mainscreen.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
@@ -115,7 +114,9 @@ class _LoginPageState extends State<LoginPage> {
                 const HeightSpacer(size: 50),
                 Center(
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      Get.to(() => const MainScreen());
+                    },
                     text: "Login",
                   ),
                 ),

@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:jobhub/constants/app_constants.dart';
 import 'package:jobhub/views/common/exports.dart';
-import 'package:jobhub/views/common/reusable_text.dart';
 
 class CustomButton extends StatelessWidget {
   const CustomButton({super.key, required this.text, this.color, this.onTap});

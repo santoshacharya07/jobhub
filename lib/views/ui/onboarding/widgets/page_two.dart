@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jobhub/views/common/exports.dart';
 import 'package:jobhub/views/common/height_spacer.dart';
 
-import '../../../../constants/app_constants.dart';
 
 class PageTwo extends StatelessWidget {
   const PageTwo({super.key});
@@ -17,12 +16,12 @@ class PageTwo extends StatelessWidget {
         color: Color(kDarkBlue.value),
         child: Column(
           children: [
-            HeightSpacer(size: 65),
+            const HeightSpacer(size: 65),
             Padding(
               padding: EdgeInsets.all(8.h),
               child: Image.asset("assets/images/page2.png"),
             ),
-            HeightSpacer(size: 20),
+            const HeightSpacer(size: 20),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -31,7 +30,7 @@ class PageTwo extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: appstyle(30, Color(kLight.value), FontWeight.w500),
                 ),
-                HeightSpacer(size: 10),
+                const HeightSpacer(size: 10),
                 Padding(
                   padding: EdgeInsets.all(8.0.h),
                   child: Text(
