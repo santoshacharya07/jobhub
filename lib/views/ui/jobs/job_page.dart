@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:get/get.dart';
 import 'package:jobhub/views/common/app_bar.dart';
+import 'package:jobhub/views/common/custom_btn.dart';
 import 'package:jobhub/views/common/custom_outline_btn.dart';
 import 'package:jobhub/views/common/exports.dart';
 import 'package:jobhub/views/common/height_spacer.dart';
@@ -97,8 +98,55 @@ class _JobPageState extends State<JobPage> {
                         ),
                       )
                     ]),
-              )
+              ),
+              const HeightSpacer(size: 20),
+              ReusableText(
+                  text: "Job Description",
+                  style: appstyle(22, Color(kDark.value), FontWeight.w600)),
+              const HeightSpacer(size: 10),
+              Text(
+                desc,
+                textAlign: TextAlign.justify,
+                maxLines: 8,
+                style: appstyle(16, Color(kDarkGrey.value), FontWeight.normal),
+              ),
+              const HeightSpacer(size: 20),
+              ReusableText(
+                  text: "Requirements",
+                  style: appstyle(22, Color(kDark.value), FontWeight.w600)),
+              const HeightSpacer(size: 10),
+              SizedBox(
+                height: heiGht * 0.6,
+                child: ListView.builder(
+                    itemCount: requirements.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
+                      final req = requirements[index];
+                      String bullet = "\u2022";
+                      return Text(
+                        "$bullet $req\n",
+                        maxLines: 4,
+                        textAlign: TextAlign.justify,
+                        style: appstyle(
+                            16, Color(kDarkGrey.value), FontWeight.normal),
+                      );
+                    }),
+              ),
+              const HeightSpacer(size: 20),
             ],
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 20.h),
+              child: CustomButton(
+                onTap: () {},
+                width: width,
+                height: heiGht * 0.06,
+                text: "Apply Now",
+                color: Color(kLight.value),
+              ),
+            ),
           )
         ]),
       ),
