@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jobhub/models/request/auth/signup_model.dart';
+import 'package:jobhub/services/helpers/auth_helper.dart';
+import 'package:jobhub/views/ui/auth/login.dart';
+
+import '../constants/app_constants.dart';
 
 class SignUpNotifier extends ChangeNotifier {
 // trigger to hide and unhide the password
@@ -30,8 +36,6 @@ class SignUpNotifier extends ChangeNotifier {
     notifyListeners();
   }
 
-  final signupFormKey = GlobalKey<FormState>();
-
   bool passwordValidator(String password) {
     if (password.isEmpty) return false;
     String pattern =
@@ -39,6 +43,8 @@ class SignUpNotifier extends ChangeNotifier {
     RegExp regex = RegExp(pattern);
     return regex.hasMatch(password);
   }
+
+  final signupFormKey = GlobalKey<FormState>();
 
   bool validateAndSave() {
     final form = signupFormKey.currentState;
@@ -48,5 +54,19 @@ class SignUpNotifier extends ChangeNotifier {
     } else {
       return false;
     }
+  }
+
+  upSignUp(SignupModel model) async {
+    AuthHelper.signup(model).then((response) {
+      if (response) {
+        Get.off(() => const LoginPage(),
+            transition: Transition.fade, duration: const Duration(seconds: 2));
+      } else {
+        Get.snackbar("Sign up Faailed", "Please check your credentials",
+            colorText: Color(kLight.value),
+            backgroundColor: Colors.red,
+            icon: const Icon(Icons.add_alert));
+      }
+    });
   }
 }

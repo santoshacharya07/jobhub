@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:jobhub/controllers/login_provider.dart';
+import 'package:jobhub/models/request/auth/signup_model.dart';
 import 'package:jobhub/views/ui/auth/login.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +38,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
+    var loginNotifier = Provider.of<LoginNotifier>(context);
     return Consumer<SignUpNotifier>(builder: (context, signupNotifier, child) {
       return Scaffold(
           appBar: PreferredSize(
@@ -62,12 +65,13 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 ),
                 ReusableText(
                   text: "Fill the details to login to your account",
-                  style: appstyle(16, Color(kDarkGrey.value), FontWeight.w600),
+                  style:
+                      appstyle(16, Color(kDarkGrey.value), FontWeight.w600),
                 ),
                 const HeightSpacer(size: 15),
                 CustomTextField(
                   controller: name,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   hintText: "Full Name",
                   validator: (name) {
                     if (name!.isEmpty) {
@@ -93,11 +97,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 const HeightSpacer(size: 20),
                 CustomTextField(
                   controller: password,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.text,
                   hintText: "Password",
                   obscureText: signupNotifier.obscureText,
                   validator: (password) {
-                    if (signupNotifier.passwordValidator(password ?? "")) {
+                    if (password!.isEmpty || password.length < 8) {
                       return " Please enter a valid password with at least one uppercase, one lowercase one digit, a special character and length of 8";
                     } else {
                       return null;
@@ -105,7 +109,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   },
                   suffixIcons: GestureDetector(
                     onTap: () {
-                      signupNotifier.obscureText = !signupNotifier.obscureText;
+                      signupNotifier.obscureText =
+                          !signupNotifier.obscureText;
                     },
                     child: Icon(
                       signupNotifier.obscureText
@@ -120,18 +125,35 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   alignment: Alignment.centerRight,
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(() => const LoginPage());
+                      Get.offAll(() => const LoginPage());
                     },
                     child: ReusableText(
                         text: "Login",
-                        style:
-                            appstyle(12, Color(kDark.value), FontWeight.w500)),
+                        style: appstyle(
+                            12, Color(kDark.value), FontWeight.w500)),
                   ),
                 ),
                 const HeightSpacer(size: 50),
                 Center(
                   child: CustomButton(
-                    onTap: () {},
+                    onTap: () {
+                      if (signupNotifier.validateAndSave()) {
+                        loginNotifier.firstTime = !loginNotifier.firstTime;
+
+                        SignupModel model = SignupModel(
+                          username: name.text,
+                          email: email.text,
+                          password: password.text,
+                        );
+                        signupNotifier.upSignUp(model);
+                      } else {
+                        Get.snackbar("Sign up Faailed",
+                            "Please check your credentials",
+                            colorText: Color(kLight.value),
+                            backgroundColor: Colors.red,
+                            icon: const Icon(Icons.add_alert));
+                      }
+                    },
                     text: "Sign Up",
                   ),
                 ),
