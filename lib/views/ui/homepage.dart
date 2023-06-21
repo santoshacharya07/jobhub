@@ -8,6 +8,7 @@ import 'package:jobhub/views/common/exports.dart';
 import 'package:jobhub/views/common/heading_widget.dart';
 import 'package:jobhub/views/common/height_spacer.dart';
 import 'package:jobhub/views/common/search.dart';
+import 'package:jobhub/views/common/vertical_shimmer.dart';
 import 'package:jobhub/views/common/vertical_tile.dart';
 import 'package:jobhub/views/ui/jobs/job_page.dart';
 import 'package:jobhub/views/ui/jobs/widgets/horizontal_shimmer.dart';
@@ -47,6 +48,7 @@ class _HomePageState extends State<HomePage> {
       body: Consumer<JobsNotifier>(
         builder: (context, jobNotifier, child) {
           jobNotifier.getJobs();
+          jobNotifier.getRecent();
           return SafeArea(
               child: SingleChildScrollView(
             child: Padding(
@@ -80,7 +82,7 @@ class _HomePageState extends State<HomePage> {
                                 ConnectionState.waiting) {
                               return const HorizontalShimmer();
                             } else if (snapshot.hasError) {
-                              return Text("${snapshot.error}");
+                              return Text("Error ${snapshot.error}");
                             } else {
                               final jobs = snapshot.data;
                               return ListView.builder(
@@ -90,9 +92,9 @@ class _HomePageState extends State<HomePage> {
                                     final job = jobs[index];
                                     return JobHorizontalTile(
                                       onTap: () {
-                                        Get.to(() => const JobPage(
-                                              title: "Facebook",
-                                              id: "12",
+                                        Get.to(() => JobPage(
+                                              title: job.company,
+                                              id: job.id,
                                             ));
                                       },
                                       job: job,
@@ -106,9 +108,22 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {},
                   ),
                   const HeightSpacer(size: 20),
-                  VerticalTile(
-                    onTap: () {},
-                  )
+                  FutureBuilder(
+                      future: jobNotifier.recent,
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const VerticalShimmer();
+                        } else if (snapshot.hasError) {
+                          return Text("Error ${snapshot.error}");
+                        } else {
+                          final jobs = snapshot.data;
+                          return VerticalTile(
+                            onTap: () {},
+                            job: jobs,
+                          );
+                        }
+                      })
                 ],
               ),
             ),
