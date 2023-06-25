@@ -1,41 +1,24 @@
 import 'dart:convert';
 
-BookmarkReqModel bookmarkReqModelFromJson(String str) => BookmarkReqModel.fromJson(json.decode(str));
+BookmarkReqResModel bookmarkReqResModelFromJson(String str) =>
+    BookmarkReqResModel.fromJson(json.decode(str));
 
-String bookmarkReqModelToJson(BookmarkReqModel data) => json.encode(data.toJson());
+String bookmarkReqResModelToJson(BookmarkReqResModel data) =>
+    json.encode(data.toJson());
 
-class BookmarkReqModel {
-    BookmarkReqModel({
-        required this.job,
-        required this.userId,
-        required this.title,
-        required this.imageUrl,
-        required this.company,
-        required this.location,
-    });
+class BookmarkReqResModel {
+  final String job;
 
-    final String job;
-    final String userId;
-    final String title;
-    final String imageUrl;
-    final String company;
-    final String location;
+  BookmarkReqResModel({
+    required this.job,
+  });
 
-    factory BookmarkReqModel.fromJson(Map<String, dynamic> json) => BookmarkReqModel(
+  factory BookmarkReqResModel.fromJson(Map<String, dynamic> json) =>
+      BookmarkReqResModel(
         job: json["job"],
-        userId: json["userId"],
-        title: json["title"],
-        imageUrl: json["imageUrl"],
-        company: json["company"],
-        location: json["location"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "job": job,
-        "userId": userId,
-        "title": title,
-        "imageUrl": imageUrl,
-        "company": company,
-        "location": location,
-    };
+      };
 }
